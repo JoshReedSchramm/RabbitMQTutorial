@@ -3,14 +3,14 @@
 
 require "bunny"
 if ARGV.empty?
-  abort "Usage: #{$0} [info] [warning] [error]"
+  abort "Usage: #{$0} [binding key]"
 end
 
 conn = Bunny.new
 conn.start
 
 ch = conn.create_channel
-x = ch.direct("direct_logs")
+x = ch.topic("topic_logs")
 q = ch.queue("", :exclusive => true)
 
 ARGV.each do |severity|
